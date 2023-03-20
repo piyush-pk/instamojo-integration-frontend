@@ -7,12 +7,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class InstamojoService {
   constructor(private _http: HttpClient) {}
 
-  url = 'https://api.instamojo.com/oauth2/token/';
+  url = 'https://test.instamojo.com/';
 
-  headers = {
-    accept: 'application/json',
-    'content-type': 'application/x-www-form-urlencoded',
-  };
+  urlRoutes = {
+    'auth': 'oauth2/token/',
+  }
+
+  headers = new HttpHeaders()
+  .set('Accept', 'application/json')
+  .set('Content-Type', 'application/x-www-form-urlencoded')
+
+
+
 
   encodedParams = new URLSearchParams({
     grant_type: 'client_credentials',
@@ -21,10 +27,9 @@ export class InstamojoService {
       'test_naLp560gaUb0elWbapL2jNjqDLi9zL6gK50M92Yb81hddkoMTWP4l2VbgFGOF5EV7KMKYSml4Ifq9Id10FiJQYAEZQ6Flwzu6JBf95o830XYYf48htCuFLXmSnH',
   });
 
+
+
   generateToken() {
-    return this._http.post(this.url, this.encodedParams, {
-      headers: this.headers,
-      withCredentials: true,
-    });
+    return this._http.post(this.url + this.urlRoutes.auth, this.encodedParams, {headers: this.headers});
   }
 }
